@@ -59,20 +59,9 @@ public:
 
     Eigen::MatrixXd forward(Eigen::MatrixXd const &x) const override
     {
-        // --- Your code here
-        // if (x.rows() == 784)
-        // {
+
             Eigen::MatrixXd y = A * x + b;
             return y;
-        // }
-        // else if (x.rows() == 128)
-        // {
-        //     Eigen::MatrixXd y(10, 1);
-        //     y = A * x + b;
-        //     return y;
-        // }
-
-        // ---
     };
 
 private:
@@ -80,8 +69,7 @@ private:
     Eigen::MatrixXd b;
 };
 
-// Create and implement the ReLU and Softmax classes here
-// --- Your code here
+
 class ReLU : public Layer
 {
 public:
@@ -89,7 +77,7 @@ public:
 
     Eigen::MatrixXd forward(Eigen::MatrixXd const &x) const override
     {
-        // Eigen::MatrixXd R_y(128, 1);
+
         Eigen::Matrix<double, 128, 1> R_y;
 
         for (int i = 0; i < x.rows(); i++)
@@ -114,7 +102,7 @@ public:
 
     Eigen::MatrixXd forward(Eigen::MatrixXd const &x) const override
     {
-        // Eigen::MatrixXd R_y(128, 1);
+
         Eigen::MatrixXd soft = x;
         double sum_s = 0;
         for (int i = 0; i < x.rows(); i++)
@@ -132,7 +120,7 @@ public:
     
 };
 
-// ---
+
 
 int main(int argc, char *argv[])
 {
@@ -161,13 +149,11 @@ int main(int argc, char *argv[])
         std::ifstream ifs{data_filename};
         Eigen::MatrixXd X = csv2mat(ifs);
 
-        // now call your layers
-        // --- Your code here
         Eigen::MatrixXd ans = l1.forward(X);
         Eigen::MatrixXd R_ans = r.forward(ans);
         Eigen::MatrixXd l_ans = l2.forward(R_ans);
         Eigen::MatrixXd probabilities = s.forward(l_ans);
-        // ---
+
         ofs << probabilities.format(vec_csv_format) << std::endl;
     }
 }
